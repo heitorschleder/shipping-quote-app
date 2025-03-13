@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useShippingStore } from '../stores/shipping';
 import type { ShippingQuoteForm } from '../types/shipping';
 import { formatPostalCode } from '../utils/formatPostalCode';
+import Loading from './images/loading.vue';
 
 const store = useShippingStore();
 
@@ -64,8 +65,8 @@ const handleSubmit = async () => {
           <input placeholder="0" type="number" v-model="form.items[0].weight" min="0" step="0.1"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
         </div>
-        <div> 
-          <label class="block text-sm font-medium text-gray-700">Valor (R$)</label> 
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Valor (R$)</label>
           <input type="number" v-model="form.invoiceValue" min="0" step="0.01"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
         </div>
@@ -91,12 +92,12 @@ const handleSubmit = async () => {
         </div>
       </div>
     </div>
-
+    <!--  -->
     <button type="submit" :disabled="store.isLoading"
-      class="mt-6 w-full bg-blue-900 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50">
+      class="mt-6 w-full bg-blue-900 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 flex items-center justify-center gap-2">
+      <Loading v-if="store.isLoading" />
       {{ store.isLoading ? 'Calculando...' : 'Calcular' }}
     </button>
-
     <p v-if="store.error" class="mt-4 text-red-600">{{ store.error }}</p>
   </form>
 </template>

@@ -2,6 +2,7 @@
 import ShippingForm from './components/ShippingForm.vue';
 import QuoteResults from './components/QuoteResults.vue';
 import HistorySidebar from './components/HistorySidebar.vue';
+
 </script>
 
 <template>
