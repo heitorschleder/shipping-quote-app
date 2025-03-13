@@ -31,7 +31,7 @@ const handleSubmit = async () => {
     <h2 class="text-2xl font-bold mb-6">Simule seu Frete</h2>
 
     <div class="space-y-4">
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="block text-sm font-medium text-gray-700">CEP de Origem</label>
           <input type="text" v-model="form.sellerCEP" @input="e => {
@@ -58,19 +58,20 @@ const handleSubmit = async () => {
       </div>
 
       <!-- Info prod -->
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="block text-sm font-medium text-gray-700">Peso (kg)</label>
-          <input type="number" v-model="form.items[0].weight" min="0" step="0.1"
+          <input placeholder="0" type="number" v-model="form.items[0].weight" min="0" step="0.1"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
         </div>
-        <div> <label class="block text-sm font-medium text-gray-700">Valor (R$)</label> <input type="number"
-            v-model="form.invoiceValue" min="0" step="0.01"
+        <div> 
+          <label class="block text-sm font-medium text-gray-700">Valor (R$)</label> 
+          <input type="number" v-model="form.invoiceValue" min="0" step="0.01"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
         </div>
       </div>
 
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <label class="block text-sm font-medium text-gray-700">Comprimento (cm)</label>
           <input type="number" v-model="form.items[0].length" min="0"
