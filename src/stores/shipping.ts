@@ -29,35 +29,38 @@ export const useShippingStore = defineStore('shipping', () => {
       })),
       RecipientCountry: form.recipientCountry
     };
-
     try {
       const response = await axios.post('/api/shipping/quote', requestBody, {
         headers: {
           'Content-Type': 'application/json',
-          'token': process.env.TOKEN_CODE
+          'token': import.meta.env.VITE_TOKEN_CODE
         }
       });
 
       const data = response.data;
 
-      const mockResults: ShippingQuoteResult[] = data.ShippingSevicesArray.map((service: ShippingService) => ({
+      const quotes: ShippingQuoteResult[] = data.ShippingSevicesArray.map((service: ShippingService) => ({
         carrier: service.Carrier,
         serviceDescription: service.ServiceDescription,
         shippingPrice: parseFloat(service.ShippingPrice),
         deliveryTime: parseInt(service.DeliveryTime)
       }));
 
-      currentQuotes.value = mockResults;
+      currentQuotes.value = quotes;
 
-      const historyItem: ShippingHistoryItem = {
-        id: crypto.randomUUID(),
-        timestamp: Date.now(),
-        form,
-        results: mockResults
-      };
+      if (quotes.length > 0) {
+        const bestQuote = quotes.reduce((prev, curr) => (curr.shippingPrice < prev.shippingPrice ? curr : prev));
 
-      history.value.unshift(historyItem);
-      localStorage.setItem('shippingHistory', JSON.stringify(history.value));
+        const historyItem: ShippingHistoryItem = {
+          id: crypto.randomUUID(),
+          timestamp: Date.now(),
+          form,
+          results: [bestQuote]
+        };
+
+        history.value.unshift(historyItem);
+        localStorage.setItem('shippingHistory', JSON.stringify(history.value));
+      }
     } catch (e) {
       error.value = 'Error: Failed to calculate shipping. Please try again.';
     } finally {
