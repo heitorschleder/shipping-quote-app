@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useShippingStore } from '../stores/shipping';
 import type { ShippingQuoteForm } from '../types/shipping';
+import { formatPostalCode } from '../utils/formatPostalCode';
 
 const store = useShippingStore();
 
@@ -20,12 +21,6 @@ const form = ref<ShippingQuoteForm>({
   }],
   recipientCountry: 'BR'
 });
-
-const formatPostalCode = (value: string) => {
-  const cleaned = value.replace(/\D/g, '');
-  if (cleaned.length <= 5) return cleaned;
-  return `${cleaned.slice(0, 5)}-${cleaned.slice(5, 8)}`;
-};
 
 const handleSubmit = async () => {
   await store.calculateShipping(form.value);

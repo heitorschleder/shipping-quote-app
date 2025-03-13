@@ -1,26 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useShippingStore } from '../stores/shipping';
+import { formatPrice } from '../utils/formatPrice';
+import { formatDate } from '../utils/formateDate';
 
 const store = useShippingStore();
-
-const formatDate = (timestamp: number) => {
-  return new Date(timestamp).toLocaleDateString('pt-BR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-};
-
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(price);
-};
-
 const isHistoryVisible = ref(false);
 </script>
 

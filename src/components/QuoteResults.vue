@@ -1,19 +1,13 @@
 <script setup lang="ts">
 import { useShippingStore } from '../stores/shipping';
 import { computed } from 'vue';
+import { formatPrice } from '../utils/formatPrice';
 
 const store = useShippingStore();
 
 const sortedQuotes = computed(() => {
   return [...store.currentQuotes].sort((a, b) => a.shippingPrice - b.shippingPrice);
 });
-
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(price);
-};
 </script>
 
 <template>
