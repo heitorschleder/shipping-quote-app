@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useShippingStore } from '../../stores/shipping';
 import HistoryIcon from '../icons/historyIcon.vue';
 import HistoryCard from '../molecules/HistoryCard.vue';
+import TrashIcon from '../icons/trashIcon.vue';
 
 const store = useShippingStore();
 const isHistoryVisible = ref(false);
@@ -10,7 +11,7 @@ const isHistoryVisible = ref(false);
 
 <template>
   <button v-if="!isHistoryVisible" @click="isHistoryVisible = true"
-  class="md:hidden bg-blue-500 text-white px-4 py-2 rounded-lg fixed bottom-4 right-4 shadow-lg z-[99]">
+    class="md:hidden bg-blue-500 text-white px-4 py-2 rounded-lg fixed bottom-4 right-4 shadow-lg z-[99]">
     {{ isHistoryVisible ? 'Fechar Histórico' : 'Abrir Histórico' }}
   </button>
 
@@ -22,10 +23,16 @@ const isHistoryVisible = ref(false);
       <div class="flex items-center">
         <HistoryIcon class="mb-4 mr-2" />
         <h3 class="text-lg font-semibold mb-4">Histórico</h3> 
+        <button @click="store.clearHistory">
+          <TrashIcon class="ml-3 mb-4" />
+        </button>
       </div>
-      <button v-if="isHistoryVisible" @click="isHistoryVisible = false" class="md:hidden text-gray-600 hover:text-gray-900">
-        Fechar
-      </button>
+      <div class="flex gap-2">
+        
+        <button v-if="isHistoryVisible" @click="isHistoryVisible = false" class="md:hidden text-gray-600 hover:text-gray-900">
+          Fechar
+        </button>
+      </div>
     </div>
 
     <div v-if="store.history.length === 0" class="text-gray-500">

@@ -83,6 +83,11 @@ export const useShippingStore = defineStore('shipping', () => {
     }
   };
 
+  const clearHistory = () => {
+    history.value = [];
+    localStorage.removeItem('shippingHistory');
+  };
+
   loadHistory();
 
   return {
@@ -90,6 +95,7 @@ export const useShippingStore = defineStore('shipping', () => {
     error,
     currentQuotes,
     history,
-    calculateShipping
+    calculateShipping,
+    clearHistory
   };
 });
