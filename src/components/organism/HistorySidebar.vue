@@ -16,7 +16,7 @@ const isHistoryVisible = ref(false);
   <div :class="{'hidden md:block': !isHistoryVisible, 'fixed inset-0 bg-white z-50 p-4 overflow-y-auto': isHistoryVisible}" class="w-80 bg-gray-50 p-4 border-l border-gray-200 h-auto overflow-y-auto md:relative md:z-auto">
     <div class="flex">
       <HistoryIcon class="mb-4 mr-2" />
-      <h3 class="text-lg font-semibold mb-4">Histórico</h3>
+      <h3 class="text-lg font-semibold mb-4">Histórico</h3> 
     </div>
 
     <div v-if="store.history.length === 0" class="text-gray-500">

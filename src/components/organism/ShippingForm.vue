@@ -7,6 +7,7 @@ import LoadingIcon from '../icons/loadingIcon.vue';
 import TruckIcon from '../icons/truckIcon.vue';
 import BaseInput from '../atoms/BaseInput.vue';
 
+const cepSearch = "https://buscacepinter.correios.com.br/app/endereco/index.php";
 const store = useShippingStore();
 
 const form = ref<ShippingQuoteForm>({
@@ -55,10 +56,10 @@ const handleSellerCEPInput = (e: InputEvent) => {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit" class="max-w-lg lg:max-w-2xl mx-auto p-6 lg:p-10 bg-white rounded-lg shadow-md">
+  <form @submit.prevent="handleSubmit" class="max-w-xl lg:max-w-7xl mx-auto p-4 lg:p-6 bg-white rounded-lg shadow-md">
     <div class="flex items-center">
-      <h2 class="text-2xl lg:text-3xl font-bold mb-6">Simule seu Frete</h2>
-      <TruckIcon />
+      <h2 class="text-2xl lg:text-3xl font-bold mb-4">Simule seu Frete</h2>
+      <TruckIcon class="mb-[10px]"/>
     </div>
 
     <div class="space-y-4">
@@ -71,9 +72,9 @@ const handleSellerCEPInput = (e: InputEvent) => {
           <input type="text" v-model="form.recipientCEP"
             @input="e => form.recipientCEP = formatPostalCode((e.target as HTMLInputElement).value)" maxlength="9"
             placeholder="00000-000"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3 pr-20" />
-          <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank"
-            class="text-blue-500 mt-3 text-[12px] font-bold hover:underline absolute right-3 top-1/2 transform -translate-y-1/2">
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
+          <a :href="cepSearch" target="_blank"
+            class="text-blue-500 mt-1 text-[12px] font-bold hover:underline absolute right-3 top-1/2 transform -translate-y-1/2">
             Não sei o CEP
           </a>
           <p v-if="errors.recipientCEP" class="text-red-600 text-sm">{{ errors.recipientCEP }}</p>
@@ -87,21 +88,25 @@ const handleSellerCEPInput = (e: InputEvent) => {
           :error="errors.invoiceValue" />
       </div>
 
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid grid-cols-2 gap-4">
         <BaseInput v-model="form.items[0].width" label="Largura (cm)" type="number" placeholder="0"
           :error="errors.width" />
         <BaseInput v-model="form.items[0].height" label="Altura (cm)" type="number" placeholder="0"
           :error="errors.height" />
-        <BaseInput v-model="form.items[0].length" label="Comprimento (cm)" type="number" placeholder="0"
-          :error="errors.length" />
       </div>
+
+      <BaseInput v-model="form.items[0].length" label="Comprimento (cm)" type="number" placeholder="0"
+        :error="errors.length" class="md:col-span-3" />
     </div>
 
-    <button type="submit" :disabled="Object.keys(errors).length > 0"
-      class="mt-6 w-full bg-blue-900 text-white py-2 px-4 lg:py-3 lg:px-6 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 flex items-center justify-center gap-2 lg:text-lg">
-      <LoadingIcon v-if="store.isLoading" />
-      {{ store.isLoading ? 'Calculando...' : 'Calcular' }}
-    </button>
+    <div class="flex justify-end mt-4">
+      <button type="submit" :disabled="Object.keys(errors).length > 0"
+        class="w-40 bg-blue-900 text-white py-2 px-4 lg:py-2 lg:px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 flex items-center justify-center gap-2 lg:text-lg">
+        <LoadingIcon v-if="store.isLoading" />
+        {{ store.isLoading ? 'Calculando...' : 'Calcular' }}
+      </button>
+    </div>
+    
     <p v-if="store.error" class="mt-4 text-red-600 lg:text-lg">{{ store.error }}</p>
   </form>
 </template>

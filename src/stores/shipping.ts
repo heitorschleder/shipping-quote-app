@@ -39,12 +39,20 @@ export const useShippingStore = defineStore('shipping', () => {
 
       const data = response.data;
 
-      const quotes: ShippingQuoteResult[] = data.ShippingSevicesArray.map((service: ShippingService) => ({
-        carrier: service.Carrier,
-        serviceDescription: service.ServiceDescription,
-        shippingPrice: parseFloat(service.ShippingPrice),
-        deliveryTime: parseInt(service.DeliveryTime)
-      }));
+      const quotes: ShippingQuoteResult[] = data.ShippingSevicesArray
+        .map((service: ShippingService): ShippingQuoteResult | null => {
+          const price = parseFloat(service.ShippingPrice);
+          if (isNaN(price)) {
+            return null;
+          }
+          return {
+            carrier: service.Carrier,
+            serviceDescription: service.ServiceDescription,
+            shippingPrice: price,
+            deliveryTime: parseInt(service.DeliveryTime)
+          };
+        })
+        .filter((quote): quote is ShippingQuoteResult => quote !== null);
 
       currentQuotes.value = quotes;
 

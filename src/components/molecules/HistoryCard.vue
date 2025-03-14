@@ -7,7 +7,7 @@ import { ShippingHistoryItem } from '../../types/shipping';
 const props = defineProps<{ item: ShippingHistoryItem | undefined }>();
 
 const formattedDate = computed(() => {
-    return props.item ? formatDate(props.item.timestamp) : 'N/A'; 
+    return props.item ? formatDate(props.item.timestamp) : 'N/A';
 });
 
 const formattedPrice = computed(() => {
@@ -19,7 +19,7 @@ const formattedPrice = computed(() => {
 </script>
 
 <template>
-    <div class="bg-white p-4 rounded-lg shadow-sm">
+    <div class="bg-white p-4 rounded-lg shadow-lg">
         <div class="text-sm text-gray-600">{{ formattedDate }}</div>
 
         <div class="mt-2">
@@ -29,7 +29,12 @@ const formattedPrice = computed(() => {
             </div>
 
             <div class="mt-2 text-sm">
-                <div>Peso: {{ props.item?.form.items && props.item.form.items.length > 0 ? props.item.form.items[0].weight : 'N/A' }}kg
+                <div>
+                    Peso: {{ 
+                        props.item?.form.items && props.item.form.items.length > 0 
+                            ? props.item.form.items[0].weight 
+                            : 'N/A' 
+                    }}kg
                 </div>
                 <div>Melhor preço: {{ formattedPrice }}</div>
             </div>
