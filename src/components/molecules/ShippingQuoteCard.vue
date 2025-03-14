@@ -14,11 +14,11 @@ import { formatPrice } from '../../utils/formatPrice';
   <div class="p-4 bg-white rounded-lg shadow-md border border-gray-200" :class="{ 'border-green-500': isBestPrice }">
     <div class="flex justify-between items-start">
       <div>
-        <h4 class="font-medium text-lg">{{ carrier }}</h4>
-        <p class="text-gray-600">{{ serviceDescription }}</p>
+        <h4 class="font-medium text-lg mr-5">{{ carrier }}</h4>
+        <p class="mt-2 text-gray-600">{{ serviceDescription }}</p>
       </div>
       <div class="text-right">
-        <p class="text-2xl font-bold text-blue-600">{{ formatPrice(shippingPrice) }}</p>
+        <p class="text-2xl mb-2 font-bold text-blue-600">{{ formatPrice(shippingPrice) }}</p>
         <p class="text-gray-600">{{ deliveryTime }} dias úteis</p>
       </div>
     </div>

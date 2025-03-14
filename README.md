@@ -3,7 +3,7 @@
 
 This project is a freight calculator that consumes the Frenet API to estimate shipping costs from one CEP code to another. It considers essential shipping details such as weight, dimensions, and product value. By integrating with Frenet, the system retrieves accurate freight rates, providing users with a seamless and efficient way to calculate shipping costs for their products.
 
-
+[View Project On-line](https://frenet-test.vercel.app/)
 
 ## Features
 

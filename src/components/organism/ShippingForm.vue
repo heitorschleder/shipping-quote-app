@@ -49,23 +49,25 @@ const handleSubmit = async () => {
   await store.calculateShipping(form.value);
 };
 
-const handleSellerCEPInput = (e: InputEvent) => {
-  form.value.sellerCEP = formatPostalCode((e.target as HTMLInputElement).value);
+const limitInputLength = (event: InputEvent, maxLength: number) => {
+  const input = event.target as HTMLInputElement;
+  if (input.value.length > maxLength) {
+    input.value = input.value.slice(0, maxLength);
+  }
 };
-
 </script>
 
 <template>
   <form @submit.prevent="handleSubmit" class="max-w-xl lg:max-w-7xl mx-auto p-4 lg:p-6 bg-white rounded-lg shadow-md">
     <div class="flex items-center">
       <h2 class="text-2xl lg:text-3xl font-bold mb-4">Simule seu Frete</h2>
-      <TruckIcon class="mb-[10px]"/>
+      <TruckIcon class="mb-[10px]" />
     </div>
 
     <div class="space-y-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <BaseInput v-model="form.sellerCEP" label="CEP de Origem" placeholder="00000-000" :error="errors.sellerCEP"
-          @input="handleSellerCEPInput" />
+          @input="(e: InputEvent) => limitInputLength(e, 9)" />
 
         <div class="relative">
           <label class="block text-sm lg:text-base font-medium text-gray-700">CEP de Destino</label>
@@ -84,25 +86,26 @@ const handleSellerCEPInput = (e: InputEvent) => {
       <div class="grid grid-cols-2 gap-4">
         <div>
           <label class="block text-sm lg:text-base font-medium text-gray-700">Peso (kg)</label>
-          <input type="number" maxlength="7" v-model="form.items[0].weight"label="Peso (kg)" step="0.001" placeholder="0.000"
-          :error="errors.weight"  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
+          <input type="number" maxlength="7" v-model="form.items[0].weight" label="Peso (kg)" step="0.001"
+            placeholder="0.000" :error="errors.weight"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
         </div>
         <div>
           <label class="block text-sm lg:text-base font-medium text-gray-700">Valor (R$)</label>
-          <input  v-model="form.invoiceValue" maxlength="7" label="Valor (R$)" type="number" step="0.01" placeholder="0.00"
-          :error="errors.invoiceValue" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
+          <input v-model="form.invoiceValue" maxlength="7" label="Valor (R$)" type="number" step="0.01"
+            placeholder="0.00" :error="errors.invoiceValue"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
         </div>
       </div>
-
       <div class="grid grid-cols-2 gap-4">
         <BaseInput v-model="form.items[0].width" label="Largura (cm)" type="number" placeholder="0"
-          :error="errors.width" maxlength="5" />
-        <BaseInput v-model="form.items[0].height" maxlength="6" label="Altura (cm)" type="number" placeholder="0"
-          :error="errors.height" />
+          :error="errors.width" @input="(e: InputEvent) => limitInputLength(e, 9)" />
+        <BaseInput v-model="form.items[0].height" label="Altura (cm)" type="number" placeholder="0"
+          :error="errors.height" @input="(e: InputEvent) => limitInputLength(e, 9)" />
       </div>
 
-      <BaseInput v-model="form.items[0].length" maxlength="6" label="Comprimento (cm)" type="number" placeholder="0"
-        :error="errors.length" class="md:col-span-3" />
+      <BaseInput v-model="form.items[0].length" label="Comprimento (cm)" type="number" placeholder="0"
+        :error="errors.length" @input="(e: InputEvent) => limitInputLength(e, 9)" />
     </div>
 
     <div class="flex justify-end mt-4">
@@ -112,7 +115,7 @@ const handleSellerCEPInput = (e: InputEvent) => {
         {{ store.isLoading ? 'Calculando...' : 'Calcular' }}
       </button>
     </div>
-    
+
     <p v-if="store.error" class="mt-4 text-red-600 lg:text-lg">{{ store.error }}</p>
   </form>
 </template>
