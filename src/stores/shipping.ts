@@ -3,10 +3,6 @@ import { ref } from 'vue';
 import axios from 'axios';
 import type { ShippingQuoteForm, ShippingQuoteResult, ShippingHistoryItem, ShippingService } from '../types/shipping';
 
-// todo pra amanhã
-// adicionar tratativa nos inputs
-// adicionar enfeites de carregamento icons, animations etc (UX)
-
 export const useShippingStore = defineStore('shipping', () => {
   const isLoading = ref(false);
   const error = ref<string | null>(null);
@@ -16,7 +12,7 @@ export const useShippingStore = defineStore('shipping', () => {
   const calculateShipping = async (form: ShippingQuoteForm) => {
     isLoading.value = true;
     error.value = null;
-    
+
     const requestBody = {
       SellerCEP: form.sellerCEP,
       RecipientCEP: form.recipientCEP,

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import ShippingForm from './components/ShippingForm.vue';
-import QuoteResults from './components/QuoteResults.vue';
-import HistorySidebar from './components/HistorySidebar.vue';
+import ShippingForm from './components/organism/ShippingForm.vue';
+import QuoteResults from './components/organism/QuoteResults.vue';
+import HistorySidebar from './components/organism/HistorySidebar.vue';
 
 </script>
 
