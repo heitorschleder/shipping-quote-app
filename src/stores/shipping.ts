@@ -29,17 +29,23 @@ export const useShippingStore = defineStore('shipping', () => {
       })),
       RecipientCountry: form.recipientCountry
     };
+
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/shipping/quote`, requestBody, {
+      const token = import.meta.env.VITE_TOKEN_CODE;
+      const api = import.meta.env.VITE_API_URL;
+
+      const response = await axios.post(`${api}/shipping/quote`, requestBody, {
         headers: {
           'Content-Type': 'application/json',
-          'token': import.meta.env.VITE_TOKEN_CODE
+          'token': token
         }
       });
 
-      const data = response.data;
+      if (!response.data || !Array.isArray(response.data.ShippingServicesArray)) {
+        throw new Error('Invalid response format from API.');
+      }
 
-      const quotes: ShippingQuoteResult[] = data.ShippingSevicesArray.map((service: ShippingService) => ({
+      const quotes: ShippingQuoteResult[] = response.data.ShippingServicesArray.map((service: ShippingService) => ({
         carrier: service.Carrier,
         serviceDescription: service.ServiceDescription,
         shippingPrice: parseFloat(service.ShippingPrice),
@@ -61,8 +67,8 @@ export const useShippingStore = defineStore('shipping', () => {
         history.value.unshift(historyItem);
         localStorage.setItem('shippingHistory', JSON.stringify(history.value));
       }
-    } catch (e) {
-      error.value = 'Error: Failed to calculate shipping. Please try again.';
+    } catch (e: any) {
+      error.value = `Error: ${e.message || 'Failed to calculate shipping. Please try again.'}`;
     } finally {
       isLoading.value = false;
     }
