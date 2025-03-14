@@ -9,14 +9,23 @@ const isHistoryVisible = ref(false);
 </script>
 
 <template>
-  <button @click="isHistoryVisible = !isHistoryVisible"
-    class="md:hidden bg-blue-500 text-white px-4 py-2 rounded-lg fixed bottom-4 right-4 shadow-lg z-[99]">
+  <button v-if="!isHistoryVisible" @click="isHistoryVisible = true"
+  class="md:hidden bg-blue-500 text-white px-4 py-2 rounded-lg fixed bottom-4 right-4 shadow-lg z-[99]">
     {{ isHistoryVisible ? 'Fechar Histórico' : 'Abrir Histórico' }}
   </button>
-  <div :class="{'hidden md:block': !isHistoryVisible, 'fixed inset-0 bg-white z-50 p-4 overflow-y-auto': isHistoryVisible}" class="w-80 bg-gray-50 p-4 border-l border-gray-200 h-auto overflow-y-auto md:relative md:z-auto">
-    <div class="flex">
-      <HistoryIcon class="mb-4 mr-2" />
-      <h3 class="text-lg font-semibold mb-4">Histórico</h3> 
+
+  <div v-if="isHistoryVisible" class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" @click="isHistoryVisible = false"></div>
+
+  <div :class="{'hidden md:block': !isHistoryVisible, 'fixed inset-0 bg-slate-100 z-50 p-4 overflow-y-auto': isHistoryVisible}" 
+    class="w-80 bg-gray-50 p-4 border-l-4 border-gray-300 h-screen overflow-y-auto md:relative md:z-auto">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <HistoryIcon class="mb-4 mr-2" />
+        <h3 class="text-lg font-semibold mb-4">Histórico</h3> 
+      </div>
+      <button v-if="isHistoryVisible" @click="isHistoryVisible = false" class="md:hidden text-gray-600 hover:text-gray-900">
+        Fechar
+      </button>
     </div>
 
     <div v-if="store.history.length === 0" class="text-gray-500">

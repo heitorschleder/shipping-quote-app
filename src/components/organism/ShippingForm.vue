@@ -32,8 +32,8 @@ const validateForm = () => {
   errors.value = {};
   if (!form.value.sellerCEP) errors.value.sellerCEP = 'Informe o CEP de origem';
   if (!form.value.recipientCEP) errors.value.recipientCEP = 'Informe o CEP de destino';
-  if (form.value.invoiceValue <= 0) errors.value.invoiceValue = 'O valor deve ser maior que 0';
-  if (form.value.items[0].weight <= 0) errors.value.weight = 'Informe um peso válido';
+  if (form.value.invoiceValue <= 0 || isNaN(form.value.invoiceValue)) errors.value.invoiceValue = 'Informe um valor válido (ex: 0.01)';
+  if (form.value.items[0].weight <= 0 || isNaN(form.value.items[0].weight)) errors.value.weight = 'Informe um peso válido (ex: 0.001)';
   if (form.value.items[0].width <= 0) errors.value.width = 'Informe a largura';
   if (form.value.items[0].height <= 0) errors.value.height = 'Informe a altura';
   if (form.value.items[0].length <= 0) errors.value.length = 'Informe o comprimento';
@@ -82,10 +82,16 @@ const handleSellerCEPInput = (e: InputEvent) => {
       </div>
 
       <div class="grid grid-cols-2 gap-4">
-        <BaseInput v-model="form.items[0].weight" label="Peso (kg)" type="number" placeholder="0"
-          :error="errors.weight" />
-        <BaseInput v-model="form.invoiceValue" label="Valor (R$)" type="number" placeholder="0.00"
-          :error="errors.invoiceValue" />
+        <div>
+          <label class="block text-sm lg:text-base font-medium text-gray-700">Peso (kg)</label>
+          <input type="number" v-model="form.items[0].weight"label="Peso (kg)" step="0.001" placeholder="0.000"
+          :error="errors.weight"  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
+        </div>
+        <div>
+          <label class="block text-sm lg:text-base font-medium text-gray-700">Valor (R$)</label>
+          <input  v-model="form.invoiceValue" label="Valor (R$)" type="number" step="0.01" placeholder="0.00"
+          :error="errors.invoiceValue" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
+        </div>
       </div>
 
       <div class="grid grid-cols-2 gap-4">
