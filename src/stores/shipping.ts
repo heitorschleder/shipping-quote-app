@@ -30,7 +30,7 @@ export const useShippingStore = defineStore('shipping', () => {
       RecipientCountry: form.recipientCountry
     };
     try {
-      const response = await axios.post('/api/shipping/quote', requestBody, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/shipping/quote`, requestBody, {
         headers: {
           'Content-Type': 'application/json',
           'token': import.meta.env.VITE_TOKEN_CODE
