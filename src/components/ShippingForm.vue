@@ -28,30 +28,24 @@ const handleSubmit = async () => {
 };
 </script>
 <template>
-  <form @submit.prevent="handleSubmit" class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-6">Simule seu Frete</h2>
+  <form @submit.prevent="handleSubmit" class="max-w-lg lg:max-w-2xl mx-auto p-6 lg:p-10 bg-white rounded-lg shadow-md">
+    <h2 class="text-2xl lg:text-3xl font-bold mb-6">Simule seu Frete</h2>
 
     <div class="space-y-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700">CEP de Origem</label>
-          <input type="text" v-model="form.sellerCEP" @input="e => {
-            const value = (e.target as HTMLInputElement).value;
-            form.sellerCEP = formatPostalCode(value);
-          }" maxlength="9" placeholder="00000-000"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+          <label class="block text-sm lg:text-base font-medium text-gray-700">CEP de Origem</label>
+          <input type="text" v-model="form.sellerCEP" @input="e => form.sellerCEP = formatPostalCode((e.target as HTMLInputElement).value)" maxlength="9" placeholder="00000-000"
+  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
         </div>
 
         <div class="relative">
-          <label class="block text-sm font-medium text-gray-700">CEP de Destino</label>
+          <label class="block text-sm lg:text-base font-medium text-gray-700">CEP de Destino</label>
           <div class="flex items-center mt-1">
-            <input type="text" v-model="form.recipientCEP" @input="e => {
-              const value = (e.target as HTMLInputElement).value;
-              form.recipientCEP = formatPostalCode(value);
-            }" maxlength="9" placeholder="00000-000"
-              class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 pr-20" />
+            <input type="text" v-model="form.recipientCEP" @input="e => form.recipientCEP = formatPostalCode((e.target as HTMLInputElement).value)" maxlength="9" placeholder="00000-000"
+  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 pr-20 lg:text-lg lg:p-3" />
             <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank"
-              class="text-blue-500 text-[11px] hover:underline absolute right-3">
+              class="text-blue-500 text-xs lg:text-sm hover:underline absolute right-3">
               Não sei o CEP
             </a>
           </div>
@@ -59,45 +53,44 @@ const handleSubmit = async () => {
       </div>
 
       <!-- Info prod -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-2 lg:grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700">Peso (kg)</label>
-          <input placeholder="0" type="number" v-model="form.items[0].weight" min="0" step="0.1"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+          <label class="block text-sm lg:text-base font-medium text-gray-700">Peso (kg)</label>
+          <input type="number" v-model="form.items[0].weight" min="0" step="0.1" placeholder="0"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700">Valor (R$)</label>
-          <input type="number" v-model="form.invoiceValue" min="0" step="0.01"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+          <label class="block text-sm lg:text-base font-medium text-gray-700">Valor (R$)</label>
+          <input type="number" v-model="form.invoiceValue" min="0" step="0.01" placeholder="0.00"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="grid grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700">Comprimento (cm)</label>
-          <input type="number" v-model="form.items[0].length" min="0"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+          <label class="block text-sm lg:text-base font-medium text-gray-700">Largura (cm)</label>
+          <input type="number" v-model="form.items[0].width" min="0" placeholder="0"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
         </div>
-
         <div>
-          <label class="block text-sm font-medium text-gray-700">Largura (cm)</label>
-          <input type="number" v-model="form.items[0].width" min="0"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+          <label class="block text-sm lg:text-base font-medium text-gray-700">Altura (cm)</label>
+          <input type="number" v-model="form.items[0].height" min="0" placeholder="0"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
         </div>
-
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Altura (cm)</label>
-          <input type="number" v-model="form.items[0].height" min="0"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
-        </div>
+      </div>
+      
+      <div>
+        <label class="block text-sm lg:text-base font-medium text-gray-700">Comprimento (cm)</label>
+        <input type="number" v-model="form.items[0].length" min="0" placeholder="0"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
       </div>
     </div>
-    <!--  -->
+    
     <button type="submit" :disabled="store.isLoading"
-      class="mt-6 w-full bg-blue-900 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 flex items-center justify-center gap-2">
+      class="mt-6 w-full bg-blue-900 text-white py-2 px-4 lg:py-3 lg:px-6 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 flex items-center justify-center gap-2 lg:text-lg">
       <Loading v-if="store.isLoading" />
       {{ store.isLoading ? 'Calculando...' : 'Calcular' }}
     </button>
-    <p v-if="store.error" class="mt-4 text-red-600">{{ store.error }}</p>
+    <p v-if="store.error" class="mt-4 text-red-600 lg:text-lg">{{ store.error }}</p>
   </form>
 </template>

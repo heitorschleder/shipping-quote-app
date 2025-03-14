@@ -5,7 +5,6 @@ import type { ShippingQuoteForm, ShippingQuoteResult, ShippingHistoryItem, Shipp
 
 // todo pra amanhã
 // adicionar tratativa nos inputs
-// melhorar apresentação do layout, aumentando o form e seus conteúdos para preencher a tela
 // adicionar enfeites de carregamento icons, animations etc (UX)
 
 export const useShippingStore = defineStore('shipping', () => {
@@ -17,7 +16,7 @@ export const useShippingStore = defineStore('shipping', () => {
   const calculateShipping = async (form: ShippingQuoteForm) => {
     isLoading.value = true;
     error.value = null;
-
+    
     const requestBody = {
       SellerCEP: form.sellerCEP,
       RecipientCEP: form.recipientCEP,
