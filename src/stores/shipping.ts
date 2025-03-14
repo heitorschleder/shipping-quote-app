@@ -3,11 +3,6 @@ import { ref } from 'vue';
 import axios from 'axios';
 import type { ShippingQuoteForm, ShippingQuoteResult, ShippingHistoryItem, ShippingService } from '../types/shipping';
 
-// todo pra amanhã
-// adicionar tratativa nos inputs
-// melhorar apresentação do layout, aumentando o form e seus conteúdos para preencher a tela
-// adicionar enfeites de carregamento icons, animations etc (UX)
-
 export const useShippingStore = defineStore('shipping', () => {
   const isLoading = ref(false);
   const error = ref<string | null>(null);
@@ -40,7 +35,7 @@ export const useShippingStore = defineStore('shipping', () => {
       const response = await axios.post(`${api}/shipping/quote`, requestBody, {
         headers: {
           'Content-Type': 'application/json',
-          'token': import.meta.env.VITE_TOKEN_CODE
+          'token': import.meta.env.VITE_TOKEN_CODE,
         }
       });
 
