@@ -3,6 +3,11 @@ import { ref } from 'vue';
 import axios from 'axios';
 import type { ShippingQuoteForm, ShippingQuoteResult, ShippingHistoryItem, ShippingService } from '../types/shipping';
 
+// todo pra amanhã
+// adicionar tratativa nos inputs
+// melhorar apresentação do layout, aumentando o form e seus conteúdos para preencher a tela
+// adicionar enfeites de carregamento icons, animations etc (UX)
+
 export const useShippingStore = defineStore('shipping', () => {
   const isLoading = ref(false);
   const error = ref<string | null>(null);
@@ -29,23 +34,19 @@ export const useShippingStore = defineStore('shipping', () => {
       })),
       RecipientCountry: form.recipientCountry
     };
-
     try {
-      const token = import.meta.env.VITE_TOKEN_CODE;
       const api = import.meta.env.VITE_API_URL;
 
       const response = await axios.post(`${api}/shipping/quote`, requestBody, {
         headers: {
           'Content-Type': 'application/json',
-          'token': token
+          'token': import.meta.env.VITE_TOKEN_CODE
         }
       });
 
-      if (!response.data || !Array.isArray(response.data.ShippingServicesArray)) {
-        throw new Error('Invalid response format from API.');
-      }
+      const data = response.data;
 
-      const quotes: ShippingQuoteResult[] = response.data.ShippingServicesArray.map((service: ShippingService) => ({
+      const quotes: ShippingQuoteResult[] = data.ShippingSevicesArray.map((service: ShippingService) => ({
         carrier: service.Carrier,
         serviceDescription: service.ServiceDescription,
         shippingPrice: parseFloat(service.ShippingPrice),
@@ -67,8 +68,8 @@ export const useShippingStore = defineStore('shipping', () => {
         history.value.unshift(historyItem);
         localStorage.setItem('shippingHistory', JSON.stringify(history.value));
       }
-    } catch (e: any) {
-      error.value = `Error: ${e.message || 'Failed to calculate shipping. Please try again.'}`;
+    } catch (e) {
+      error.value = 'Error: Failed to calculate shipping. Please try again.';
     } finally {
       isLoading.value = false;
     }
