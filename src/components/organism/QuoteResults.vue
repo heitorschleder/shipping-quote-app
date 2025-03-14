@@ -16,7 +16,7 @@ const sortedQuotes = computed(() => {
       <SendIcon class="mr-2" />
       <h3 class="text-xl font-semibold mb-4">Opções de Envio Disponíveis</h3>
     </div>
-    <div class="space-y-4">
+    <div class="space-y-4 lg:flex lg:space-y-0 lg:space-x-4">
       <ShippingQuoteCard
         v-for="(quote, index) in sortedQuotes"
         :key="index"
