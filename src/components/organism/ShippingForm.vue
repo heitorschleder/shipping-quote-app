@@ -84,24 +84,24 @@ const handleSellerCEPInput = (e: InputEvent) => {
       <div class="grid grid-cols-2 gap-4">
         <div>
           <label class="block text-sm lg:text-base font-medium text-gray-700">Peso (kg)</label>
-          <input type="number" v-model="form.items[0].weight"label="Peso (kg)" step="0.001" placeholder="0.000"
+          <input type="number" maxlength="7" v-model="form.items[0].weight"label="Peso (kg)" step="0.001" placeholder="0.000"
           :error="errors.weight"  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
         </div>
         <div>
           <label class="block text-sm lg:text-base font-medium text-gray-700">Valor (R$)</label>
-          <input  v-model="form.invoiceValue" label="Valor (R$)" type="number" step="0.01" placeholder="0.00"
+          <input  v-model="form.invoiceValue" maxlength="7" label="Valor (R$)" type="number" step="0.01" placeholder="0.00"
           :error="errors.invoiceValue" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 lg:text-lg lg:p-3" />
         </div>
       </div>
 
       <div class="grid grid-cols-2 gap-4">
         <BaseInput v-model="form.items[0].width" label="Largura (cm)" type="number" placeholder="0"
-          :error="errors.width" />
-        <BaseInput v-model="form.items[0].height" label="Altura (cm)" type="number" placeholder="0"
+          :error="errors.width" maxlength="5" />
+        <BaseInput v-model="form.items[0].height" maxlength="6" label="Altura (cm)" type="number" placeholder="0"
           :error="errors.height" />
       </div>
 
-      <BaseInput v-model="form.items[0].length" label="Comprimento (cm)" type="number" placeholder="0"
+      <BaseInput v-model="form.items[0].length" maxlength="6" label="Comprimento (cm)" type="number" placeholder="0"
         :error="errors.length" class="md:col-span-3" />
     </div>
 

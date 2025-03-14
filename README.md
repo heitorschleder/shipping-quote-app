@@ -71,4 +71,4 @@ Vercel
 ## Authors
 
 - Dev Front-End: [@heitorschleder](https://github.com/heitorschleder)
-- API: [Frenet](https://www.frenet.com/)
+- API: [Frenet](https://www.frenet.com.br/)
