@@ -52,7 +52,7 @@ export const useShippingStore = defineStore('shipping', () => {
             deliveryTime: parseInt(service.DeliveryTime)
           };
         })
-        .filter((quote): quote is ShippingQuoteResult => quote !== null);
+        .filter((quote: ShippingQuoteResult | null): quote is ShippingQuoteResult => quote !== null);
 
       currentQuotes.value = quotes;
 
